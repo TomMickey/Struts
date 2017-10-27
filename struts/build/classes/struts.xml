@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.action.extension" value="do,action"></constant>
+	<package name="hi" extends="struts-default">
+		<global-results>
+			<result name="ok">
+				/hello.jsp
+			</result>
+		</global-results>
+	</package>
+	<package name="default" namespace="/" extends="hi">
+		<action name="nihao">
+			<result>/nihao.jsp</result>
+		</action>
+		<!--这是默认的正常的方法-->		
+		<action name="hello" class="cn.bupt.HelloAction">
+			<param name="savepath">ffff</param>
+			<!-- <result name="ok">/hello.jsp</result> -->
+        </action>
+        <!-- 指定了method -->
+        <action name="execute" class="cn.bupt.HelloAction" method="add">
+			<result name="success">/WEB-INF/page/add.jsp</result>
+        </action>
+        <action name="context" class="cn.bupt.ContextAction">
+        	<result name="ok1">/ok.jsp</result>
+        </action>
+        <action name="hiServletActionContext" class="cn.bupt.HiServletActionContext">
+        	<result name="ok2">/ok2.jsp</result>
+        </action>
+        <!-- 重定向方法 -->
+        <action name="redirect">
+        	<result type="redirect">/hi.jsp</result>
+        </action>
+        <!-- 重定向到另一个包里的action -->
+        <action name="hi">
+        	<result type="redirectAction">
+        		<param name="actionName">name</param>
+        		<param name="namespace">test</param>
+        	</result>
+        </action>
+    </package>
+	<package name="test" extends="hi">
+		<action name="name">
+			<result>/index1.jsp</result>
+		</action>
+	</package>
+
+</struts>
